@@ -1,0 +1,10 @@
+# Frontend ignores
+finate-frontend/node_modules/
+finate-frontend/dist/
+finate-frontend/.env
+
+# Backend ignores
+finate-backend/target/
+finate-backend/.idea/
+finate-backend/.mvn/wrapper/maven-wrapper.jar
+finate-backend/*.class
