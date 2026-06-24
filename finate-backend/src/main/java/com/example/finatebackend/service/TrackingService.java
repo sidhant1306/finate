@@ -54,7 +54,7 @@ public class TrackingService {
         expenseTransactionRepository.save(transaction);
         Budget budget = budgetRepository.findByUserUserIdAndBudgetCategory(user.getUserId(), expenseTransactionRequestDto.expenseCategory());
         // check if the transaction type is debit and the budget exists,
-        // if it does then update the budget spent amount :
+        // if it does, then update the budget-spent amount :
         if(transaction.getExpenseTransactionType() == ExpenseTransactionType.DEBIT && budget != null) {
             updateBudgetSpent(
                     user.getUserId(),
@@ -193,7 +193,7 @@ public class TrackingService {
             // check if the budget exists cause if the budget doesn't exist, we won't be able to update the budget and the updatebudgetspent will return null pointer exception
             Budget budget = budgetRepository.findByUserUserIdAndBudgetCategory(user.getUserId(), expenseTransactionRequestDto.expenseCategory());
             if(budget != null) {
-                // Always reverse old(first of all reverse the old transaction if it was a debit),
+                // Always reverse old (first of all, reverse the old transaction if it was a debit),
                 // cause if the old transaction was a debit, we need to reverse it to change the budget spent,
                 // so like if 500 was spent before, we need to add 500 in the budget spent to change the affect
                 if (transaction.getExpenseTransactionType() == ExpenseTransactionType.DEBIT) {

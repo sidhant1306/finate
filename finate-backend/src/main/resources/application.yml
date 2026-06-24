@@ -59,3 +59,7 @@ finnhub:
   api:
     key: ${FINNHUB_API_KEY}
     base-url: ${FINNHUB_API_BASE_URL}
+
+
+management.endpoints.web.exposure.include: health
+management.endpoint.health.show-details: never
