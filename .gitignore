@@ -8,3 +8,10 @@ finate-backend/target/
 finate-backend/.idea/
 finate-backend/.mvn/wrapper/maven-wrapper.jar
 finate-backend/*.class
+
+
+.env
+target/
+*.jar
+node_modules/
+dist/
