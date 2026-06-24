@@ -62,14 +62,14 @@ export default function Tracking() {
     const params: Record<string, string> = {}
     if (startDate) params.startDate = startDate
     if (endDate) params.endDate = endDate
-    const { data } = await axiosInstance.get<ExpenseTransactionSummary>('/tracking/get-all-expenses', { params })
+    const { data } = await axiosInstance.get<ExpenseTransactionSummary>('/api/tracking/get-all-expenses', { params })
     setSummary(data)
     setTransactions(data.expenseTransactionResponseDtoList)
   }, [startDate, endDate])
 
   const fetchByType = useCallback(async () => {
     const { data } = await axiosInstance.get<ExpenseTransactionResponse[]>(
-      '/tracking/get-all-expenses-by-type',
+      '/api/tracking/get-all-expenses-by-type',
       { params: { expenseTransactionType: typeFilter } },
     )
     setTransactions(data)
@@ -77,7 +77,7 @@ export default function Tracking() {
 
   const fetchByCategory = useCallback(async () => {
     const { data } = await axiosInstance.get<ExpenseTransactionResponse[]>(
-      '/tracking/get-all-expenses-by-category',
+      '/api/tracking/get-all-expenses-by-category',
       { params: { category: categoryFilter } },
     )
     setTransactions(data)
@@ -104,7 +104,7 @@ export default function Tracking() {
     event.preventDefault()
     const loadingToast = toast.loading('Adding transaction...')
     try {
-      await axiosInstance.post('/tracking/create', newTransaction)
+      await axiosInstance.post('/api/tracking/create', newTransaction)
       toast.dismiss(loadingToast)
       toast.success('Transaction added')
       setNewTransaction(emptyForm)
@@ -138,7 +138,7 @@ export default function Tracking() {
         expenseCategory: editForm.expenseCategory,
         expenseDescription: editForm.expenseDescription || undefined,
       }
-      await axiosInstance.put('/tracking/edit-expense-transaction-by-id', payload, {
+      await axiosInstance.put('/api/tracking/edit-expense-transaction-by-id', payload, {
         params: { expenseTransactionId: id },
       })
       toast.dismiss(loadingToast)
@@ -155,7 +155,7 @@ export default function Tracking() {
     if (!window.confirm('Delete this transaction?')) return
     const loadingToast = toast.loading('Deleting...')
     try {
-      await axiosInstance.delete('/tracking/delete-expense-transaction-by-id', {
+      await axiosInstance.delete('/api/tracking/delete-expense-transaction-by-id', {
         params: { expenseTransactionId: id },
       })
       toast.dismiss(loadingToast)
@@ -171,7 +171,7 @@ export default function Tracking() {
     setEmailSending(true)
     const loadingToast = toast.loading('Sending transaction history to your email...')
     try {
-      const { data } = await axiosInstance.post<string>('/tracking/email-transaction-history')
+      const { data } = await axiosInstance.post<string>('/api/tracking/email-transaction-history')
       toast.dismiss(loadingToast)
       toast.success(data)
     } catch (error) {

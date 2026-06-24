@@ -33,7 +33,7 @@ export default function Stocks() {
   })
 
   const fetchWatchlist = useCallback(async () => {
-    const { data } = await axiosInstance.get<StockWatchlistResponse[]>('/stocks/get-entire-watchlist')
+    const { data } = await axiosInstance.get<StockWatchlistResponse[]>('/api/stocks/get-entire-watchlist')
     setWatchlist(data)
   }, [])
 
@@ -55,7 +55,7 @@ export default function Stocks() {
     const loadingToast = toast.loading('Searching stocks...')
     try {
       const { data } = await axiosInstance.get<StockSearchResult[]>(
-        `/finnhub/search/${encodeURIComponent(searchQuery.trim())}`,
+        `/api/finnhub/search/${encodeURIComponent(searchQuery.trim())}`,
       )
       setSearchResults(data)
       toast.dismiss(loadingToast)
@@ -70,7 +70,7 @@ export default function Stocks() {
     const loadingToast = toast.loading('Fetching quote...')
     try {
       const { data } = await axiosInstance.get<FinnhubQuoteResponse>(
-        `/finnhub/quote/${encodeURIComponent(result.symbol)}`,
+        `/api/finnhub/quote/${encodeURIComponent(result.symbol)}`,
       )
       setSelectedQuote(data)
       setSelectedSymbol(result.symbol)
@@ -91,7 +91,7 @@ export default function Stocks() {
     if (!selectedSymbol) return
     const loadingToast = toast.loading('Adding to watchlist...')
     try {
-      await axiosInstance.post('/stocks/add-stock-to-watchlist', {
+      await axiosInstance.post('/api/stocks/add-stock-to-watchlist', {
         stockSymbol: selectedSymbol,
         CompanyName: selectedCompany,
       })
@@ -107,7 +107,7 @@ export default function Stocks() {
   const handleRemoveFromWatchlist = async (symbol: string) => {
     const loadingToast = toast.loading('Removing from watchlist...')
     try {
-      await axiosInstance.delete('/stocks/remove-watchlist', {
+      await axiosInstance.delete('/api/stocks/remove-watchlist', {
         data: { stockSymbol: symbol },
       })
       toast.dismiss(loadingToast)
@@ -123,7 +123,7 @@ export default function Stocks() {
     event.preventDefault()
     const loadingToast = toast.loading('Buying shares...')
     try {
-      await axiosInstance.post('/stocks/buy-stock', buyForm)
+      await axiosInstance.post('/api/stocks/buy-stock', buyForm)
       toast.dismiss(loadingToast)
       toast.success(`${buyForm.symbol} purchased`)
       setBuyForm({ symbol: '', companyName: '', quantity: 0 })

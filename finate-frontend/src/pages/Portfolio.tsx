@@ -232,7 +232,7 @@ export default function Portfolio() {
   const fetchPortfolio = useCallback(async () => {
     const loadingToast = toast.loading('Loading portfolio...')
     try {
-      const { data } = await axiosInstance.get<PortfolioResponse>('/portfolio/get-portfolio')
+      const { data } = await axiosInstance.get<PortfolioResponse>('/api/portfolio/get-portfolio')
       setPortfolio(data)
       toast.dismiss(loadingToast)
     } catch (error) {
@@ -251,7 +251,7 @@ export default function Portfolio() {
     if (!holdingToSell) return
     const loadingToast = toast.loading('Selling shares...')
     try {
-      await axiosInstance.post('/stocks/sell-stock', {
+      await axiosInstance.post('/api/stocks/sell-stock', {
         symbol: holdingToSell.stockHolding.symbol,
         companyName: holdingToSell.stockHolding.companyName,
         quantity: quantity,

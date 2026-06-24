@@ -87,7 +87,7 @@ export default function Dashboard() {
     const fetchDashboard = async () => {
       const loadingToast = toast.loading('Loading dashboard...')
       try {
-        const dashboardRes = await axiosInstance.get<DashboardResponse>('/dashboard/get-dashboard')
+        const dashboardRes = await axiosInstance.get<DashboardResponse>('/api/dashboard/get-dashboard')
         setDashboard(dashboardRes.data)
         toast.dismiss(loadingToast)
         if (!toastFired.current && fromLogin) {
@@ -110,7 +110,7 @@ export default function Dashboard() {
       }
       setInsightRequested(true)
       try {
-        const res = await axiosInstance.get<{ insight: string }>('/ai/get-weekly-insight')
+        const res = await axiosInstance.get<{ insight: string }>('/api/ai/get-weekly-insight')
         setWeeklyInsight(res.data.insight)
       } catch {
         // Non-critical — silently skip
@@ -128,13 +128,13 @@ export default function Dashboard() {
   const handleGenerateInsight = async () => {
     const loadingToast = toast.loading('Generating AI insight... This may take a moment.')
     try {
-      await axiosInstance.post('/ai/generate-weekly-insight')
+      await axiosInstance.post('/api/ai/generate-weekly-insight')
       toast.dismiss(loadingToast)
       toast.success('Insight generated & emailed successfully!')
       
       // Fetch the newly generated insight to update the UI
       setInsightLoading(true)
-      const res = await axiosInstance.get<{ insight: string }>('/ai/get-weekly-insight')
+      const res = await axiosInstance.get<{ insight: string }>('/api/ai/get-weekly-insight')
       setWeeklyInsight(res.data.insight)
     } catch (error) {
       toast.dismiss(loadingToast)

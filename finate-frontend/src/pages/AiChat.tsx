@@ -58,7 +58,7 @@ export default function AiChat() {
     if (inputRef.current) inputRef.current.style.height = 'auto'
 
     try {
-      const { data } = await axiosInstance.post<{ aiResponse: string }>('/ai/chat', {
+      const { data } = await axiosInstance.post<{ aiResponse: string }>('/api/ai/chat', {
         message: messageText,
       })
 

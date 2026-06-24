@@ -37,7 +37,7 @@ export default function Budget() {
   const fetchBudgets = useCallback(async () => {
     const loadingToast = toast.loading('Loading budgets...')
     try {
-      const { data } = await axiosInstance.get<BudgetSummaryResponse>('/budget/get-all-budgets')
+      const { data } = await axiosInstance.get<BudgetSummaryResponse>('/api/budget/get-all-budgets')
       setSummary(data)
       toast.dismiss(loadingToast)
     } catch (error) {
@@ -52,7 +52,7 @@ export default function Budget() {
     event.preventDefault()
     const loadingToast = toast.loading('Creating budget...')
     try {
-      await axiosInstance.post('/budget/create', newBudget)
+      await axiosInstance.post('/api/budget/create', newBudget)
       toast.dismiss(loadingToast)
       toast.success('Budget created')
       setNewBudget({ budgetAmount: 0, budgetCategory: 'FOOD' })
@@ -75,7 +75,7 @@ export default function Budget() {
     if (!editForm) return
     const loadingToast = toast.loading('Saving budget...')
     try {
-      await axiosInstance.put('/budget/edit-budget-by-id', editForm, { params: { budgetId } })
+      await axiosInstance.put('/api/budget/edit-budget-by-id', editForm, { params: { budgetId } })
       toast.dismiss(loadingToast)
       toast.success('Budget updated')
       cancelEdit()
@@ -90,7 +90,7 @@ export default function Budget() {
     if (!window.confirm('Delete this budget?')) return
     const loadingToast = toast.loading('Deleting budget...')
     try {
-      await axiosInstance.delete('/budget/delete-budget-by-id', { params: { budgetId } })
+      await axiosInstance.delete('/api/budget/delete-budget-by-id', { params: { budgetId } })
       toast.dismiss(loadingToast)
       toast.success('Budget deleted')
       await fetchBudgets()
@@ -104,7 +104,7 @@ export default function Budget() {
     if (!window.confirm('Delete all budgets? This cannot be undone.')) return
     const loadingToast = toast.loading('Deleting all budgets...')
     try {
-      await axiosInstance.delete('/budget/delete-all-budgets')
+      await axiosInstance.delete('/api/budget/delete-all-budgets')
       toast.dismiss(loadingToast)
       toast.success('All budgets deleted')
       await fetchBudgets()
@@ -117,7 +117,7 @@ export default function Budget() {
   const handleLookupByCategory = async () => {
     const loadingToast = toast.loading('Looking up budget...')
     try {
-      const { data } = await axiosInstance.get<BudgetResponse>('/budget/get-budget-by-category', {
+      const { data } = await axiosInstance.get<BudgetResponse>('/api/budget/get-budget-by-category', {
         params: { category: lookupCategory },
       })
       setLookupResult(data)
@@ -132,7 +132,7 @@ export default function Budget() {
     if (!lookupId) return
     const loadingToast = toast.loading('Looking up budget...')
     try {
-      const { data } = await axiosInstance.get<BudgetResponse>('/budget/get-budget-by-id', {
+      const { data } = await axiosInstance.get<BudgetResponse>('/api/budget/get-budget-by-id', {
         params: { budgetId: Number(lookupId) },
       })
       setLookupResult(data)

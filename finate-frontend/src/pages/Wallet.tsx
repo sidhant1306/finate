@@ -64,7 +64,7 @@ export default function Wallet() {
   })
 
   const fetchWallet = useCallback(async () => {
-    const { data } = await axiosInstance.get<WalletSummaryResponse>('/wallet/get-wallet-details')
+    const { data } = await axiosInstance.get<WalletSummaryResponse>('/api/wallet/get-wallet-details')
     setWallet(data)
   }, [])
 
@@ -95,7 +95,7 @@ export default function Wallet() {
 
     const loadingToast = toast.loading('Creating payment order...')
     try {
-      const { data: order } = await axiosInstance.post<PaymentResponse>('/wallet/create-order', {
+      const { data: order } = await axiosInstance.post<PaymentResponse>('/api/wallet/create-order', {
         paymentAmount: amount,
         paymentType: 'WALLET',
       })
@@ -118,7 +118,7 @@ export default function Wallet() {
               paymentType: 'WALLET',
               amount: order.amount,
             }
-            await axiosInstance.post<string>('/wallet/verify-payment', verifyPayload)
+            await axiosInstance.post<string>('/api/wallet/verify-payment', verifyPayload)
             toast.dismiss(verifyToast)
             toast.success('Deposit successful')
             setDepositAmount('')
@@ -141,7 +141,7 @@ export default function Wallet() {
     event.preventDefault()
     const loadingToast = toast.loading('Sending money...')
     try {
-      const { data } = await axiosInstance.post<UpiPaymentResponse>('/upi/send-money', withdrawForm)
+      const { data } = await axiosInstance.post<UpiPaymentResponse>('/api/upi/send-money', withdrawForm)
       toast.dismiss(loadingToast)
       toast.success(`Sent ${formatCurrency(withdrawForm.amount)} to ${data.receiverName}`)
       setWithdrawForm({ receiverUserid: 0, amount: 0 })

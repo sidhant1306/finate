@@ -33,7 +33,7 @@ export default function Premium() {
     setLoading(true)
     const loadingToast = toast.loading('Creating payment order...')
     try {
-      const { data: order } = await axiosInstance.post<PaymentResponse>('/wallet/create-order', {
+      const { data: order } = await axiosInstance.post<PaymentResponse>('/api/wallet/create-order', {
         paymentAmount: 99,
         paymentType: 'PREMIUM',
       })
@@ -56,7 +56,7 @@ export default function Premium() {
               paymentType: 'PREMIUM',
               amount: order.amount,
             }
-            await axiosInstance.post<string>('/wallet/verify-payment', verifyPayload)
+            await axiosInstance.post<string>('/api/wallet/verify-payment', verifyPayload)
             toast.dismiss(verifyToast)
             toast.success('🎉 Welcome to Premium!')
             setUserRole('PREMIUM')

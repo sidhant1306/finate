@@ -25,7 +25,7 @@ export default function Login() {
     event.preventDefault()
     const loadingToast = toast.loading('Signing in...')
     try {
-      const { data } = await axiosInstance.post<LoginResponse>('/auth/login', form)
+      const { data } = await axiosInstance.post<LoginResponse>('/api/auth/login', form)
       login(data.token, data.firstName, data.lastName, data.userEmail, data.username, data.userRole)
       toast.dismiss(loadingToast)
       toast.success(`Welcome back, ${data.firstName}! 🎉`)

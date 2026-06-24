@@ -27,7 +27,7 @@ export default function OtpVerify() {
 
     const loadingToast = toast.loading('Verifying OTP...')
     try {
-      const response = await axiosInstance.post<boolean>('/auth/verify-otp', {
+      const response = await axiosInstance.post<boolean>('/api/auth/verify-otp', {
         otp: Number(otp),
         userEmail,
       })

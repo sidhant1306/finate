@@ -34,7 +34,7 @@ export default function Register() {
 
     const loadingToast = toast.loading('Creating account...')
     try {
-      await axiosInstance.post<RegisterResponse>('/auth/register', form)
+      await axiosInstance.post<RegisterResponse>('/api/auth/register', form)
       toast.dismiss(loadingToast)
       toast.success('Account created! Please verify your email.')
       navigate('/verify-otp', { state: { email: form.userEmail } })
